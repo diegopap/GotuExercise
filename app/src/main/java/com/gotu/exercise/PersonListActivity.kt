@@ -2,6 +2,10 @@ package com.gotu.exercise
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import com.gotu.exercise.api.RandomUserService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_person_list.*
 import kotlinx.android.synthetic.main.person_list.*
 
@@ -25,6 +29,14 @@ class PersonListActivity : AppCompatActivity() {
         toolbar.title = title
 
         presenter.setupRecyclerView(supportFragmentManager, person_list)
+
+        RandomUserService.instance.getRandomUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result -> Log.d("results", "total:" + result.results.size) },
+                        { error -> Log.d("error", error.message) }
+                )
     }
 
 
