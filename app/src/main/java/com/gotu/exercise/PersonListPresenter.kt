@@ -1,60 +1,37 @@
 package com.gotu.exercise
 
-import android.content.Intent
-import android.support.v4.app.FragmentManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.content.Context
+import android.util.Log
 import com.gotu.exercise.api.Person
-import kotlinx.android.synthetic.main.person_list_content.view.*
+import com.gotu.exercise.api.RandomUserService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class PersonListPresenter {
+class PersonListPresenter : PersonListContract.Presenter {
 
-    fun setupRecyclerView(supportFragmentManager: FragmentManager, recyclerView: RecyclerView, results: List<Person>) {
-        recyclerView.adapter = SimpleItemRecyclerViewAdapter(supportFragmentManager, results)
+    private var personListView : PersonListContract.View? = null
+
+    override fun setView(view : PersonListContract.View) {
+        personListView = view
     }
 
-    class SimpleItemRecyclerViewAdapter(private val supportFragmentManager: FragmentManager,
-                                        private val values: List<Person>) :
-            RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
-
-        private val onClickListener: View.OnClickListener
-
-        init {
-            onClickListener = View.OnClickListener { v ->
-                val item = v.tag as Person
-                val intent = Intent(v.context, PersonDetailActivity::class.java).apply {
-                    putExtra(PersonDetailFragment.ARG_ITEM, item)
-                }
-                v.context.startActivity(intent)
-            }
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.person_list_content, parent, false)
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = values[position]
-            holder.idView.text = position.toString()
-            holder.contentView.text = item.email
-
-            with(holder.itemView) {
-                tag = item
-                setOnClickListener(onClickListener)
-            }
-        }
-
-        override fun getItemCount() = values.size
-
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.id_text
-            val contentView: TextView = view.content
-        }
+    override fun loadUsers() {
+        RandomUserService.instance.getRandomUsers(1, 50, "test")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result ->
+                            Log.d("results", "total:" + result.results.size)
+                            personListView?.showPersonList(result.results)
+                        },
+                        { error -> Log.d("error", error.message) }
+                )
     }
+
+    override fun openDetail(context: Context, person: Person) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
 
 }
