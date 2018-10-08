@@ -28,13 +28,14 @@ class PersonListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        presenter.setupRecyclerView(supportFragmentManager, person_list)
-
-        RandomUserService.instance.getRandomUsers()
+        RandomUserService.instance.getRandomUsers(1, 50, "test")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { result -> Log.d("results", "total:" + result.results.size) },
+                        { result ->
+                            Log.d("results", "total:" + result.results.size)
+                            presenter.setupRecyclerView(supportFragmentManager, person_list, result.results)
+                        },
                         { error -> Log.d("error", error.message) }
                 )
     }

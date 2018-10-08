@@ -42,8 +42,8 @@ class PersonDetailActivity : AppCompatActivity() {
             // using a fragment transaction.
             val fragment = PersonDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(PersonDetailFragment.ARG_ITEM_ID,
-                            intent.getStringExtra(PersonDetailFragment.ARG_ITEM_ID))
+                    putSerializable(PersonDetailFragment.ARG_ITEM,
+                            intent.getSerializableExtra(PersonDetailFragment.ARG_ITEM))
                 }
             }
 
