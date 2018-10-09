@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import com.gotu.exercise.R
+import com.gotu.exercise.api.User
 import com.gotu.exercise.list.UserListActivity
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
@@ -29,6 +31,11 @@ class UserDetailActivity : AppCompatActivity() {
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        val user = intent.getSerializableExtra(UserDetailFragment.ARG_ITEM) as User
+
+        Glide.with(this).load(user.picture.large).into(image)
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -44,8 +51,7 @@ class UserDetailActivity : AppCompatActivity() {
             // using a fragment transaction.
             val fragment = UserDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(UserDetailFragment.ARG_ITEM,
-                            intent.getSerializableExtra(UserDetailFragment.ARG_ITEM))
+                    putSerializable(UserDetailFragment.ARG_ITEM, user)
                 }
             }
 
