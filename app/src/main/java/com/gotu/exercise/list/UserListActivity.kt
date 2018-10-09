@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
+import com.gotu.exercise.utils.openDetail
 import kotlinx.android.synthetic.main.activity_user_list.*
 import kotlinx.android.synthetic.main.user_list.*
 import kotlinx.android.synthetic.main.user_list_content.view.*
@@ -25,9 +26,7 @@ import kotlinx.android.synthetic.main.user_list_content.view.*
  */
 class UserListActivity : AppCompatActivity(), UserListContract.View {
 
-    companion object {
-        var presenter : UserListContract.Presenter = UserListPresenter()
-    }
+    val presenter : UserListContract.Presenter = UserListPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +50,7 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
 
         init {
             onClickListener = View.OnClickListener { v ->
-                presenter.openDetail(v.context, v.tag as User)
+                openDetail(v.context, v.tag as User)
             }
         }
 

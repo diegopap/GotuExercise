@@ -1,7 +1,5 @@
 package com.gotu.exercise.detail
 
-import android.content.Context
-import android.content.Intent
 import android.util.Log
 import com.gotu.exercise.api.RandomUserService
 import com.gotu.exercise.api.Response
@@ -16,13 +14,6 @@ class UserDetailPresenter : UserDetailContract.Presenter {
 
     override fun setView(view: UserDetailContract.View) {
         userDetailView = view
-    }
-
-    override fun openDetail(context: Context, user: User) {
-        val intent = Intent(context, UserDetailActivity::class.java).apply {
-            putExtra(UserDetailFragment.ARG_ITEM, user)
-        }
-        context.startActivity(intent)
     }
 
     override fun getFriends(seed: String) {

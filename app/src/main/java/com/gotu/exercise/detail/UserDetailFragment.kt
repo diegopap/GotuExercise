@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
+import com.gotu.exercise.utils.openDetail
 import kotlinx.android.synthetic.main.user_detail.view.*
 
 /**
@@ -44,7 +45,13 @@ class UserDetailFragment : Fragment() , UserDetailContract.View {
 
     override fun showFriends(users: List<User>) {
         view?.friend1?.text = users[0].name.toString()
+        view?.friend1?.setOnClickListener {
+            openDetail(requireContext(), users[0])
+        }
         view?.friend2?.text = users[1].name.toString()
+        view?.friend2?.setOnClickListener {
+            openDetail(requireContext(), users[1])
+        }
     }
 
     override fun setLoadingIndicator(active: Boolean) {

@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textIsSelectable="true"
         tools:context=".detail.UserDetailFragment" />
 
     <TextView android:id="@+id/email"
@@ -19,7 +18,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textIsSelectable="true"
+        tools:context=".detail.UserDetailFragment" />
+
+    <TextView
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/friends"
+        tools:context=".detail.UserDetailFragment" />
+
+    <TextView android:id="@+id/friend1"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:context=".detail.UserDetailFragment" />
+
+    <TextView android:id="@+id/friend2"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         tools:context=".detail.UserDetailFragment" />
 
 </LinearLayout>

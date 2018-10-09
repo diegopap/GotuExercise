@@ -1,6 +1,5 @@
 package com.gotu.exercise.list
 
-import android.content.Context
 import com.gotu.exercise.api.User
 
 interface UserListContract {
@@ -18,6 +17,5 @@ interface UserListContract {
 
     fun loadUsers()
 
-    fun openDetail(context: Context, user: User)
   }
 }

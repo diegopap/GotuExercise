@@ -1,6 +1,5 @@
 package com.gotu.exercise.detail
 
-import android.content.Context
 import com.gotu.exercise.api.User
 
 interface UserDetailContract {
@@ -15,8 +14,6 @@ interface UserDetailContract {
   interface Presenter {
 
     fun setView(view: View)
-
-    fun openDetail(context: Context, user: User)
 
     fun getFriends(seed: String)
 

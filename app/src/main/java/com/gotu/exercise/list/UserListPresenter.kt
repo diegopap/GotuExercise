@@ -1,12 +1,7 @@
 package com.gotu.exercise.list
 
-import android.content.Context
-import android.content.Intent
 import android.util.Log
 import com.gotu.exercise.api.RandomUserService
-import com.gotu.exercise.api.User
-import com.gotu.exercise.detail.UserDetailActivity
-import com.gotu.exercise.detail.UserDetailFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -31,10 +26,4 @@ class UserListPresenter : UserListContract.Presenter {
                 )
     }
 
-    override fun openDetail(context: Context, user: User) {
-        val intent = Intent(context, UserDetailActivity::class.java).apply {
-            putExtra(UserDetailFragment.ARG_ITEM, user)
-        }
-        context.startActivity(intent)
-    }
 }
