@@ -5,19 +5,19 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_person_detail.*
+import kotlinx.android.synthetic.main.activity_user_detail.*
 
 /**
- * An activity representing a single Person detail screen. This
+ * An activity representing a single User detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
- * in a [PersonListActivity].
+ * in a [UserListActivity].
  */
-class PersonDetailActivity : AppCompatActivity() {
+class UserDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_person_detail)
+        setContentView(R.layout.activity_user_detail)
         setSupportActionBar(detail_toolbar)
 
         fab.setOnClickListener { view ->
@@ -40,10 +40,10 @@ class PersonDetailActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
-            val fragment = PersonDetailFragment().apply {
+            val fragment = UserDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(PersonDetailFragment.ARG_ITEM,
-                            intent.getSerializableExtra(PersonDetailFragment.ARG_ITEM))
+                    putSerializable(UserDetailFragment.ARG_ITEM,
+                            intent.getSerializableExtra(UserDetailFragment.ARG_ITEM))
                 }
             }
 
@@ -62,7 +62,7 @@ class PersonDetailActivity : AppCompatActivity() {
                     //
                     // http://developer.android.com/design/patterns/navigation.html#up-vs-back
 
-                    navigateUpTo(Intent(this, PersonListActivity::class.java))
+                    navigateUpTo(Intent(this, UserListActivity::class.java))
                     true
                 }
                 else -> super.onOptionsItemSelected(item)

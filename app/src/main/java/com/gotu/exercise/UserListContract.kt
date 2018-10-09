@@ -1,13 +1,13 @@
 package com.gotu.exercise
 
 import android.content.Context
-import com.gotu.exercise.api.Person
+import com.gotu.exercise.api.User
 
-interface PersonListContract {
+interface UserListContract {
 
   interface View {
 
-    fun showPersonList(persons: List<Person>)
+    fun showUserList(users: List<User>)
 
     fun setLoadingIndicator(active: Boolean)
   }
@@ -18,6 +18,6 @@ interface PersonListContract {
 
     fun loadUsers()
 
-    fun openDetail(context: Context, person: Person)
+    fun openDetail(context: Context, user: User)
   }
 }

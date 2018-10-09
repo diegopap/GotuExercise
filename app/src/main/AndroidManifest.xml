@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".PersonListActivity"
+            android:name=".UserListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PersonDetailActivity"
+            android:name=".UserDetailActivity"
             android:label="@string/title_person_detail"
-            android:parentActivityName=".PersonListActivity"
+            android:parentActivityName=".UserListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gotu.exercise.PersonListActivity" />
+                android:value="com.gotu.exercise.UserListActivity" />
         </activity>
     </application>
 

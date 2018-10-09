@@ -5,26 +5,26 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.gotu.exercise.api.Person
-import kotlinx.android.synthetic.main.activity_person_detail.*
-import kotlinx.android.synthetic.main.person_detail.view.*
+import com.gotu.exercise.api.User
+import kotlinx.android.synthetic.main.activity_user_detail.*
+import kotlinx.android.synthetic.main.user_detail.view.*
 
 /**
- * A fragment representing a single Person detail screen.
- * This fragment is either contained in a [PersonListActivity]
- * in two-pane mode (on tablets) or a [PersonDetailActivity]
+ * A fragment representing a single User detail screen.
+ * This fragment is either contained in a [UserListActivity]
+ * in two-pane mode (on tablets) or a [UserDetailActivity]
  * on handsets.
  */
-class PersonDetailFragment : Fragment() {
+class UserDetailFragment : Fragment() {
 
-    private var item: Person? = null
+    private var item: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM)) {
-                item = it.getSerializable(ARG_ITEM) as Person
+                item = it.getSerializable(ARG_ITEM) as User
                 activity?.toolbar_layout?.title = item?.email
             }
         }
@@ -32,7 +32,7 @@ class PersonDetailFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.person_detail, container, false)
+        val rootView = inflater.inflate(R.layout.user_detail, container, false)
 
         // Show the dummy content as text in a TextView.
         item?.let {

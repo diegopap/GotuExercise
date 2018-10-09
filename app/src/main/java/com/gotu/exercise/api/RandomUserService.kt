@@ -30,5 +30,5 @@ interface RandomUserService {
         }
     }
 }
-data class Response(var results: List<Person>)
-data class Person(val email: String) : Serializable
+data class Response(var results: List<User>)
+data class User(val email: String) : Serializable
