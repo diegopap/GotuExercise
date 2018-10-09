@@ -72,6 +72,26 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
                 tag = item
                 setOnClickListener(onClickListener)
             }
+            val traslationX = Math.random() * 1000f
+            val traslationY = Math.random() * 1000f
+            val traslationZ = Math.random() * 1000f
+            val rotation = Math.random() * 1000f
+            holder.itemView.animate()
+                    .translationXBy(traslationX.toFloat())
+                    .translationYBy(traslationY.toFloat())
+                    .translationZBy(traslationZ.toFloat())
+                    .rotationBy(rotation.toFloat())
+                    .setDuration(0)
+                    .withEndAction {
+                        holder.itemView.animate()
+                            .translationXBy(-traslationX.toFloat())
+                            .translationYBy(-traslationY.toFloat())
+                            .translationZBy(-traslationZ.toFloat())
+                            .rotationBy(-rotation.toFloat())
+                            .setDuration(1000)
+                            .start()
+                    }
+                    .start()
         }
 
         override fun getItemCount() = values.size
