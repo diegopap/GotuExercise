@@ -66,7 +66,7 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
 
             Glide.with(holder.image.context).load(item.picture.large).into(holder.image)
 
-            holder.name.text = item.name.title.capitalize() + " " + item.name.first.capitalize() + " " + item.name.last.capitalize()
+            holder.name.text = item.name.toString()
 
             with(holder.itemView) {
                 tag = item

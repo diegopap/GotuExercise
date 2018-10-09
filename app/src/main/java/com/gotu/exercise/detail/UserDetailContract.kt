@@ -18,7 +18,7 @@ interface UserDetailContract {
 
     fun openDetail(context: Context, user: User)
 
-    fun getFriends()
+    fun getFriends(seed: String)
 
   }
 }

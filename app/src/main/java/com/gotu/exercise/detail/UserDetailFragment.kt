@@ -33,14 +33,11 @@ class UserDetailFragment : Fragment() , UserDetailContract.View {
 
         val item = arguments?.getSerializable(ARG_ITEM) as User
 
-        // Show the dummy content as text in a TextView.
-        item.let {
-            rootView.name.text = it.name.toString()
-            rootView.email.text = it.email
-        }
+        rootView.name.text = item.name.toString()
+        rootView.email.text = item.email
 
         presenter.setView(this)
-        presenter.getFriends()
+        presenter.getFriends(item.email)
 
         return rootView
     }

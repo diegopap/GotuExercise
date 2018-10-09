@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.gotu.exercise.api.RandomUserService
+import com.gotu.exercise.api.Response
 import com.gotu.exercise.api.User
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 
 class UserDetailPresenter : UserDetailContract.Presenter {
@@ -23,10 +25,10 @@ class UserDetailPresenter : UserDetailContract.Presenter {
         context.startActivity(intent)
     }
 
-    override fun getFriends() {
-        val friend1 = RandomUserService.instance.getRandomUsers(1, 1, "friend1")
-        val friend2 = RandomUserService.instance.getRandomUsers(1, 1, "friend2")
-        friend1.mergeWith(friend2)
+    override fun getFriends(seed: String) {
+        val friend1 = RandomUserService.instance.getRandomUsers(1, 1, seed + "1")
+        val friend2 = RandomUserService.instance.getRandomUsers(1, 1, seed + "2")
+        friend1.zipWith(friend2, BiFunction<Response, Response, Response> { r1, r2 -> convert(r1,r2)})
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -36,6 +38,12 @@ class UserDetailPresenter : UserDetailContract.Presenter {
                         },
                         { error -> Log.d("error", error.message) }
                 )
-        }
+    }
+
+    fun convert(response1 : Response, response2 : Response) : Response {
+        val users = response1.results as ArrayList<User>
+        users.addAll(response2.results)
+        return Response(users)
+    }
 
 }
