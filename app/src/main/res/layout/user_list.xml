@@ -6,8 +6,9 @@
     android:name="com.gotu.exercise.PersonListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".UserListActivity"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    app:layoutManager="android.support.v7.widget.GridLayoutManager"
+    app:spanCount="3"
+    tools:context=".list.UserListActivity"
     tools:listitem="@layout/user_list_content" />

@@ -1,4 +1,4 @@
-package com.gotu.exercise
+package com.gotu.exercise.list
 
 import android.content.Context
 import com.gotu.exercise.api.User

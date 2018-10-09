@@ -1,4 +1,4 @@
-package com.gotu.exercise
+package com.gotu.exercise.list
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import kotlinx.android.synthetic.main.activity_user_list.*
 import kotlinx.android.synthetic.main.user_list.*
@@ -60,8 +63,10 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.idView.text = position.toString()
-            holder.contentView.text = item.email
+
+            Glide.with(holder.image.context).load(item.picture.large).into(holder.image)
+
+            holder.name.text = item.name.title.capitalize() + " " + item.name.first.capitalize() + " " + item.name.last.capitalize()
 
             with(holder.itemView) {
                 tag = item
@@ -72,8 +77,8 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
         override fun getItemCount() = values.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.id_text
-            val contentView: TextView = view.content
+            val image: ImageView = view.image
+            val name: TextView = view.name
         }
     }
 

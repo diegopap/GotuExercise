@@ -1,10 +1,11 @@
-package com.gotu.exercise
+package com.gotu.exercise.detail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import kotlinx.android.synthetic.main.activity_user_detail.*
 import kotlinx.android.synthetic.main.user_detail.view.*
