@@ -14,15 +14,19 @@ class UserListPresenter : UserListContract.Presenter {
     }
 
     override fun loadUsers() {
+        userListView?.setLoadingIndicator(true)
         RandomUserService.instance.getRandomUsers(1, 50, "test")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { result ->
                             Log.d("results", "total:" + result.results.size)
+                            userListView?.setLoadingIndicator(false)
                             userListView?.showUserList(result.results)
                         },
-                        { error -> Log.d("error", error.message) }
+                        { error ->
+                            userListView?.setLoadingIndicator(false)
+                            Log.d("error", error.message) }
                 )
     }
 

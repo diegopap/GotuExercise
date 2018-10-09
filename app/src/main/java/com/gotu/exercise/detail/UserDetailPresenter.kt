@@ -17,6 +17,7 @@ class UserDetailPresenter : UserDetailContract.Presenter {
     }
 
     override fun getFriends(seed: String) {
+        userDetailView?.setLoadingIndicator(true)
         val friend1 = RandomUserService.instance.getRandomUsers(1, 1, seed + "1")
         val friend2 = RandomUserService.instance.getRandomUsers(1, 1, seed + "2")
         friend1.zipWith(friend2, BiFunction<Response, Response, Response> { r1, r2 -> convert(r1,r2)})
@@ -25,9 +26,12 @@ class UserDetailPresenter : UserDetailContract.Presenter {
                 .subscribe(
                         { result ->
                             Log.d("results", "total:" + result.results.size)
+                            userDetailView?.setLoadingIndicator(false)
                             userDetailView?.showFriends(result.results)
                         },
-                        { error -> Log.d("error", error.message) }
+                        { error ->
+                            userDetailView?.setLoadingIndicator(false)
+                            Log.d("error", error.message) }
                 )
     }
 

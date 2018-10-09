@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import com.gotu.exercise.utils.openDetail
+import com.gotu.exercise.utils.setLoadingIndicator
 import kotlinx.android.synthetic.main.activity_user_list.*
 import kotlinx.android.synthetic.main.user_list.*
 import kotlinx.android.synthetic.main.user_list_content.view.*
@@ -102,7 +103,7 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
     }
 
     override fun setLoadingIndicator(active: Boolean) {
-        TODO("not implemented")
+        setLoadingIndicator(this, active)
     }
 
 

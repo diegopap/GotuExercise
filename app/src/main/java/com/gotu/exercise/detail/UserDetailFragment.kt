@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import com.gotu.exercise.utils.openDetail
+import com.gotu.exercise.utils.setLoadingIndicator
 import kotlinx.android.synthetic.main.user_detail.view.*
 
 /**
@@ -55,6 +56,6 @@ class UserDetailFragment : Fragment() , UserDetailContract.View {
     }
 
     override fun setLoadingIndicator(active: Boolean) {
-        TODO("not implemented")
+        setLoadingIndicator(requireActivity(), active)
     }
 }
