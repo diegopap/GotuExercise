@@ -15,7 +15,17 @@ import kotlinx.android.synthetic.main.user_detail.view.*
  * in two-pane mode (on tablets) or a [UserDetailActivity]
  * on handsets.
  */
-class UserDetailFragment : Fragment() {
+class UserDetailFragment : Fragment() , UserDetailContract.View {
+
+    companion object {
+        /**
+         * The fragment argument representing the item that this fragment
+         * represents.
+         */
+        const val ARG_ITEM = "item"
+    }
+
+    var presenter = UserDetailPresenter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -25,18 +35,22 @@ class UserDetailFragment : Fragment() {
 
         // Show the dummy content as text in a TextView.
         item.let {
-            rootView.name.text = "${item.name.title.capitalize()} ${item.name.first.capitalize()} ${item.name.last.capitalize()}"
+            rootView.name.text = it.name.toString()
             rootView.email.text = it.email
         }
+
+        presenter.setView(this)
+        presenter.getFriends()
 
         return rootView
     }
 
-    companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM = "item"
+    override fun showFriends(users: List<User>) {
+        view?.friend1?.text = users[0].name.toString()
+        view?.friend2?.text = users[1].name.toString()
+    }
+
+    override fun setLoadingIndicator(active: Boolean) {
+        TODO("not implemented")
     }
 }
