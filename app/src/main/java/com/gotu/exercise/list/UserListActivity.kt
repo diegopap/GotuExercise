@@ -1,6 +1,7 @@
 package com.gotu.exercise.list
 
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -30,12 +31,29 @@ class UserListActivity : DaggerAppCompatActivity(), UserListContract.View {
     @Inject
     lateinit var presenter : UserListContract.Presenter
 
+    private val visibleThreshold = 6
+
+    private var loading = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
 
         setSupportActionBar(toolbar)
         toolbar.title = title
+
+        person_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val totalItem = (recyclerView.layoutManager as GridLayoutManager).itemCount
+                val lastVisibleItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+
+                if (!loading && lastVisibleItem >= totalItem - visibleThreshold) {
+                    loading = true
+                    presenter.loadUsers()
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -45,10 +63,15 @@ class UserListActivity : DaggerAppCompatActivity(), UserListContract.View {
     }
 
     override fun showUserList(users: List<User>) {
-        person_list.adapter = SimpleItemRecyclerViewAdapter(users)
+        loading = false
+        if (person_list.adapter == null) {
+            person_list.adapter = SimpleItemRecyclerViewAdapter(users as ArrayList<User>)
+        } else {
+            (person_list.adapter as SimpleItemRecyclerViewAdapter).addAll(users)
+        }
     }
 
-    class SimpleItemRecyclerViewAdapter(private val values: List<User>) :
+    class SimpleItemRecyclerViewAdapter(private val values: ArrayList<User>) :
             RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
 
         private val onClickListener: View.OnClickListener
@@ -103,6 +126,11 @@ class UserListActivity : DaggerAppCompatActivity(), UserListContract.View {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val image: ImageView = view.image
             val name: TextView = view.name
+        }
+
+        fun addAll(users : List<User>) {
+            values.addAll(users)
+            notifyDataSetChanged()
         }
     }
 

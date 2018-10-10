@@ -12,12 +12,14 @@ class UserListPresenter @Inject constructor() : UserListContract.Presenter {
 
     private var userListView : UserListContract.View? = null
 
+    private var page = 1
+
     override fun takeView(view : UserListContract.View) {
         userListView = view
     }
 
     override fun loadUsers() {
-        randomUserService.getRandomUsers(1, 50, "test")
+        randomUserService.getRandomUsers(page, 50, "test")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -28,6 +30,7 @@ class UserListPresenter @Inject constructor() : UserListContract.Presenter {
                         { error ->
                             Log.d("error", error.message) }
                 )
+        page++
     }
 
     override fun dropView() {
