@@ -1,7 +1,6 @@
 package com.gotu.exercise.list
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,11 @@ import com.bumptech.glide.Glide
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import com.gotu.exercise.utils.openDetail
-import com.gotu.exercise.utils.setLoadingIndicator
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_user_list.*
 import kotlinx.android.synthetic.main.user_list.*
 import kotlinx.android.synthetic.main.user_list_content.view.*
+import javax.inject.Inject
 
 /**
  * An activity representing a list of Pings. This activity
@@ -25,9 +25,10 @@ import kotlinx.android.synthetic.main.user_list_content.view.*
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class UserListActivity : AppCompatActivity(), UserListContract.View {
+class UserListActivity : DaggerAppCompatActivity(), UserListContract.View {
 
-    val presenter : UserListContract.Presenter = UserListPresenter()
+    @Inject
+    lateinit var presenter : UserListContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,11 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
 
         setSupportActionBar(toolbar)
         toolbar.title = title
+    }
 
-        presenter.setView(this)
+    override fun onResume() {
+        super.onResume()
+        presenter.takeView(this)
         presenter.loadUsers()
     }
 
@@ -102,9 +106,8 @@ class UserListActivity : AppCompatActivity(), UserListContract.View {
         }
     }
 
-    override fun setLoadingIndicator(active: Boolean) {
-        setLoadingIndicator(this, active)
+    override fun onPause() {
+        super.onPause()
+        presenter.dropView()
     }
-
-
 }

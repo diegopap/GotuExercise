@@ -8,14 +8,15 @@ interface UserDetailContract {
 
     fun showFriends(users: List<User>)
 
-    fun setLoadingIndicator(active: Boolean)
   }
 
   interface Presenter {
 
-    fun setView(view: View)
+    fun takeView(view: View)
 
     fun getFriends(seed: String)
+
+    fun dropView()
 
   }
 }

@@ -1,15 +1,15 @@
 package com.gotu.exercise.detail
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import com.gotu.exercise.utils.openDetail
-import com.gotu.exercise.utils.setLoadingIndicator
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.user_detail.view.*
+import javax.inject.Inject
 
 /**
  * A fragment representing a single User detail screen.
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.user_detail.view.*
  * in two-pane mode (on tablets) or a [UserDetailActivity]
  * on handsets.
  */
-class UserDetailFragment : Fragment() , UserDetailContract.View {
+class UserDetailFragment : DaggerFragment() , UserDetailContract.View {
 
     companion object {
         /**
@@ -27,7 +27,8 @@ class UserDetailFragment : Fragment() , UserDetailContract.View {
         const val ARG_ITEM = "item"
     }
 
-    var presenter = UserDetailPresenter()
+    @Inject
+    lateinit var presenter : UserDetailContract.Presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,11 +39,16 @@ class UserDetailFragment : Fragment() , UserDetailContract.View {
         rootView.name.text = item.name.toString()
         rootView.email.text = item.email
 
-        presenter.setView(this)
-        presenter.getFriends(item.email)
-
         return rootView
     }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.takeView(this)
+        val item = arguments?.getSerializable(ARG_ITEM) as User
+        presenter.getFriends(item.email)
+    }
+
 
     override fun showFriends(users: List<User>) {
         view?.friend1?.text = users[0].name.toString()
@@ -55,7 +61,8 @@ class UserDetailFragment : Fragment() , UserDetailContract.View {
         }
     }
 
-    override fun setLoadingIndicator(active: Boolean) {
-        setLoadingIndicator(requireActivity(), active)
+    override fun onPause() {
+        super.onPause()
+        presenter.dropView()
     }
 }

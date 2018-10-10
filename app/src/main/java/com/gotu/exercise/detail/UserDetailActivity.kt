@@ -3,12 +3,12 @@ package com.gotu.exercise.detail
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import com.gotu.exercise.list.UserListActivity
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
 /**
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_user_detail.*
  * item details are presented side-by-side with a list of items
  * in a [UserListActivity].
  */
-class UserDetailActivity : AppCompatActivity() {
+class UserDetailActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,30 +7,30 @@ import com.gotu.exercise.api.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class UserDetailPresenter : UserDetailContract.Presenter {
-
+class UserDetailPresenter @Inject constructor() : UserDetailContract.Presenter {
     private var userDetailView : UserDetailContract.View? = null
 
-    override fun setView(view: UserDetailContract.View) {
+    @Inject
+    lateinit var randomUserService: RandomUserService
+
+    override fun takeView(view: UserDetailContract.View) {
         userDetailView = view
     }
 
     override fun getFriends(seed: String) {
-        userDetailView?.setLoadingIndicator(true)
-        val friend1 = RandomUserService.instance.getRandomUsers(1, 1, seed + "1")
-        val friend2 = RandomUserService.instance.getRandomUsers(1, 1, seed + "2")
+        val friend1 = randomUserService.getRandomUsers(1, 1, seed + "1")
+        val friend2 = randomUserService.getRandomUsers(1, 1, seed + "2")
         friend1.zipWith(friend2, BiFunction<Response, Response, Response> { r1, r2 -> convert(r1,r2)})
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { result ->
                             Log.d("results", "total:" + result.results.size)
-                            userDetailView?.setLoadingIndicator(false)
                             userDetailView?.showFriends(result.results)
                         },
                         { error ->
-                            userDetailView?.setLoadingIndicator(false)
                             Log.d("error", error.message) }
                 )
     }
@@ -40,5 +40,11 @@ class UserDetailPresenter : UserDetailContract.Presenter {
         users.addAll(response2.results)
         return Response(users)
     }
+
+    override fun dropView() {
+       userDetailView = null
+    }
+
+
 
 }

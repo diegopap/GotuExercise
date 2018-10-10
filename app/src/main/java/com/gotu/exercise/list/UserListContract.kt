@@ -8,14 +8,15 @@ interface UserListContract {
 
     fun showUserList(users: List<User>)
 
-    fun setLoadingIndicator(active: Boolean)
   }
 
   interface Presenter {
 
-    fun setView(view: View)
+    fun takeView(view: View)
 
     fun loadUsers()
+
+    fun dropView()
 
   }
 }
