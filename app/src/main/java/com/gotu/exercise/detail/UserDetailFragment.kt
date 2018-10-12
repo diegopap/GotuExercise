@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
+import com.gotu.exercise.utils.ARG_ITEM
 import com.gotu.exercise.utils.openDetail
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.user_detail.view.*
@@ -18,14 +19,6 @@ import javax.inject.Inject
  * on handsets.
  */
 class UserDetailFragment : DaggerFragment() , UserDetailContract.View {
-
-    companion object {
-        /**
-         * The fragment argument representing the item that this fragment
-         * represents.
-         */
-        const val ARG_ITEM = "item"
-    }
 
     @Inject
     lateinit var presenter : UserDetailContract.Presenter

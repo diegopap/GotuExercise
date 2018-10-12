@@ -6,11 +6,16 @@ import com.gotu.exercise.detail.UserDetailFragment
 import com.gotu.exercise.detail.UserDetailModule
 import com.gotu.exercise.list.UserListActivity
 import com.gotu.exercise.list.UserListModule
+import com.gotu.exercise.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivityBindingModule {
+
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = [(UserListModule::class)])
+  abstract fun splashActivity(): SplashActivity
 
   @ActivityScoped
   @ContributesAndroidInjector(modules = [(UserListModule::class)])

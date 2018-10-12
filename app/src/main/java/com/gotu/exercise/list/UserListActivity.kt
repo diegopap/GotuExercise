@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
+import com.gotu.exercise.utils.ARG_ITEMS
 import com.gotu.exercise.utils.openDetail
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_user_list.*
@@ -54,6 +55,11 @@ class UserListActivity : DaggerAppCompatActivity(), UserListContract.View {
                 }
             }
         })
+
+        val users = intent.getSerializableExtra(ARG_ITEMS)
+        if (users != null) {
+            person_list.adapter = SimpleItemRecyclerViewAdapter(users as ArrayList<User>)
+        }
     }
 
     override fun onResume() {
@@ -129,8 +135,11 @@ class UserListActivity : DaggerAppCompatActivity(), UserListContract.View {
         }
 
         fun addAll(users : List<User>) {
-            values.addAll(users)
-            notifyDataSetChanged()
+            for (user in users) {
+                if (!this.values.contains(user)) {
+                    this.values.add(user)
+                }
+            }
         }
     }
 

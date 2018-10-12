@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.gotu.exercise.R
 import com.gotu.exercise.api.User
 import com.gotu.exercise.list.UserListActivity
+import com.gotu.exercise.utils.ARG_ITEM
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_user_detail.*
 
@@ -33,7 +34,7 @@ class UserDetailActivity : DaggerAppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        val user = intent.getSerializableExtra(UserDetailFragment.ARG_ITEM) as User
+        val user = intent.getSerializableExtra(ARG_ITEM) as User
 
         Glide.with(this).load(user.picture.large).into(image)
 
@@ -51,7 +52,7 @@ class UserDetailActivity : DaggerAppCompatActivity() {
             // using a fragment transaction.
             val fragment = UserDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(UserDetailFragment.ARG_ITEM, user)
+                    putSerializable(ARG_ITEM, user)
                 }
             }
 
